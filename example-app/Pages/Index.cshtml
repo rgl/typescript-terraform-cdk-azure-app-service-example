@@ -1,0 +1,121 @@
+﻿@page
+@using System.Collections
+@using System.Diagnostics
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Environment</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-end">Property</th>
+                <th scope="col" class="text-start">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row" class="text-end">Environment.CommandLine</th>
+                <td class="text-start">@Environment.CommandLine</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.CommandLineArgs</th>
+                <td class="text-start">
+                @foreach (var arg in Environment.GetCommandLineArgs())
+                {
+                    @arg
+                }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.CurrentDirectory</th>
+                <td class="text-start">@Environment.CurrentDirectory</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.Is64BitProcess</th>
+                <td class="text-start">@Environment.Is64BitProcess</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.OSVersion</th>
+                <td class="text-start">@Environment.OSVersion</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.ProcessorCount</th>
+                <td class="text-start">@Environment.ProcessorCount</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Process.MaxWorkingSet</th>
+                <td class="text-start">@Process.GetCurrentProcess().MaxWorkingSet</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.UserName</th>
+                <td class="text-start">@Environment.UserName</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Environment.Version</th>
+                <td class="text-start">@Environment.Version</td>
+            </tr>
+        </tbody>
+    </table>
+    <h1 class="display-4">Environment Variables</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-end">Variable</th>
+                <th scope="col" class="text-start">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var de in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>().OrderBy(de => de.Key))
+        {
+            <tr>
+                <th scope="row" class="text-end">@de.Key</th>
+                <td class="text-start">@de.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <h1 class="display-4">Request Context</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-end">Property</th>
+                <th scope="col" class="text-start">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row" class="text-end">Request.Scheme</th>
+                <td class="text-start">@Request.Scheme</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Request.Host</th>
+                <td class="text-start">@Request.Host</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">HttpContext.Connection.RemoteIpAddress</th>
+                <td class="text-start">@HttpContext.Connection.RemoteIpAddress</td>
+            </tr>
+        </tbody>
+    </table>
+    <h1 class="display-4">Request Headers</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-end">Header</th>
+                <th scope="col" class="text-start">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var header in Request.Headers.OrderBy(kp => kp.Key))
+        {
+            <tr>
+                <th scope="row" class="text-end">@header.Key</th>
+                <td class="text-start">@header.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
