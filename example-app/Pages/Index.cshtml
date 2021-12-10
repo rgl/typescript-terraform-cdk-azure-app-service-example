@@ -100,7 +100,7 @@
             </tr>
             <tr>
                 <th scope="row" class="text-end">ServerPublicIpAddress</th>
-                <td class="text-start">@Model.ServerPublicIpAddress</td>
+                <td class="text-start">@Model.ServerPublicGeoIp?.Ip (@Model.ServerPublicGeoIp?.Country/@Model.ServerPublicGeoIp?.Region/@Model.ServerPublicGeoIp?.City/@Model.ServerPublicGeoIp?.Organization)</td>
             </tr>
             <tr>
                 <th scope="row" class="text-end">HttpContext.Connection.LocalIpAddress</th>
@@ -108,7 +108,7 @@
             </tr>
             <tr>
                 <th scope="row" class="text-end">HttpContext.Connection.RemoteIpAddress</th>
-                <td class="text-start">@HttpContext.Connection.RemoteIpAddress</td>
+                <td class="text-start">@HttpContext.Connection.RemoteIpAddress (@Model.ClientPublicGeoIp?.Country/@Model.ClientPublicGeoIp?.Region/@Model.ClientPublicGeoIp?.City/@Model.ClientPublicGeoIp?.Organization)</td>
             </tr>
             <tr>
                 <th scope="row" class="text-end">HttpContext.TraceIdentifier</th>
