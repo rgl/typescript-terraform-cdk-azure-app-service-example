@@ -10,6 +10,7 @@ builder.Services.AddHttpLogging(logging =>
         logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders | HttpLoggingFields.ResponsePropertiesAndHeaders;
     }
 );
+builder.Services.AddHttpClient();
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
