@@ -1,8 +1,15 @@
 using System.Net;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpLogging(logging =>
+    {
+        // NB unfortunately there is no way to log the HttpContext.TraceIdentifier.
+        logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders | HttpLoggingFields.ResponsePropertiesAndHeaders;
+    }
+);
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -25,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseForwardedHeaders();
+app.UseHttpLogging();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
