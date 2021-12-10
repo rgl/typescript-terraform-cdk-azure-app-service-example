@@ -87,6 +87,10 @@
         </thead>
         <tbody>
             <tr>
+                <th scope="row" class="text-end">Request.IsHttps</th>
+                <td class="text-start">@Request.IsHttps</td>
+            </tr>
+            <tr>
                 <th scope="row" class="text-end">Request.Scheme</th>
                 <td class="text-start">@Request.Scheme</td>
             </tr>
@@ -97,6 +101,10 @@
             <tr>
                 <th scope="row" class="text-end">HttpContext.Connection.RemoteIpAddress</th>
                 <td class="text-start">@HttpContext.Connection.RemoteIpAddress</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">HttpContext.TraceIdentifier</th>
+                <td class="text-start">@HttpContext.TraceIdentifier</td>
             </tr>
         </tbody>
     </table>
