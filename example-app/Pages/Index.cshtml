@@ -114,6 +114,10 @@
                 <th scope="row" class="text-end">HttpContext.TraceIdentifier</th>
                 <td class="text-start">@HttpContext.TraceIdentifier</td>
             </tr>
+            <tr>
+                <th scope="row" class="text-end">Activity.Current.Id</th>
+                <td class="text-start">@Activity.Current?.Id</td>
+            </tr>
         </tbody>
     </table>
     <h1 class="display-4">Request Headers</h1>
