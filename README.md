@@ -48,6 +48,7 @@ az webapp deployment source config-zip \
     --resource-group "$(jq -r .outputs.appResourceGroup.value ../terraform.example.tfstate)" \
     --name "$(jq -r .outputs.appName.value ../terraform.example.tfstate)" \
     --src example-app.zip
+echo "The App is at $(jq -r .outputs.appUrl.value ../terraform.example.tfstate)"
 popd
 ```
 
