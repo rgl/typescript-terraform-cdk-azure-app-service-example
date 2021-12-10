@@ -18,14 +18,14 @@
     "node": ">=10.12"
   },
   "dependencies": {
-    "@cdktf/provider-azurerm": "^0.3.28",
+    "@cdktf/provider-azurerm": "^0.3.52",
     "cdktf": "^0.8.1",
-    "constructs": "^10.0.10"
+    "constructs": "^10.0.12"
   },
   "devDependencies": {
-    "@types/node": "^16.11.11",
+    "@types/node": "^16.11.12",
     "cdktf-cli": "^0.8.1",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.3"
   }
 }
