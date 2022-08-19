@@ -17,7 +17,7 @@ class ExampleStack extends TerraformStack {
 
     // NB you can test the relative speed from you browser to a location using https://azurespeedtest.azurewebsites.net/
     // get the available locations with: az account list-locations --output table
-    const locationName = "France Central"; // see https://azure.microsoft.com/en-us/global-infrastructure/france/
+    const locationName = "northeurope";
 
     const resourceGroupName = "rgl-cdktf-app-service-example";
 
