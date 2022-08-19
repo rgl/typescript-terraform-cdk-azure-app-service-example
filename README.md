@@ -10,7 +10,7 @@ hash -r
 Install this project dependencies:
 
 ```bash
-npm install
+npm ci
 ```
 
 Login into azure-cli:

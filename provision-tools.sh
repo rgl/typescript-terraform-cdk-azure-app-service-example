@@ -25,8 +25,8 @@ npm --version
 
 # install terraform.
 # see https://www.terraform.io/downloads.html
-artifact_url=https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip
-artifact_sha=eeb46091a42dc303c3a3c300640c7774ab25cbee5083dafa5fd83b54c8aca664
+artifact_url=https://releases.hashicorp.com/terraform/1.2.7/terraform_1.2.7_linux_amd64.zip
+artifact_sha=3866eb55549514ffa73b6d460807ab8172e1a063f8dc21ab9044c45668e4dce9
 artifact_path="/tmp/$(basename $artifact_url)"
 wget -qO $artifact_path $artifact_url
 if [ "$(sha256sum $artifact_path | awk '{print $1}')" != "$artifact_sha" ]; then
@@ -43,5 +43,5 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_rel
     | sudo tee /etc/apt/sources.list.d/azure-cli.list
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install -y azure-cli='2.31.0-*'
+sudo apt-get install -y azure-cli='2.39.0-*'
 az version
