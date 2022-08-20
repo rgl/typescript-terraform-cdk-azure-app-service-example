@@ -5,10 +5,10 @@ import {
   TerraformStack,
 } from "cdktf";
 import {
-  AppService,
-  AppServicePlan,
+  ServicePlan,
   AzurermProvider,
   ResourceGroup,
+  WindowsWebApp,
 } from "@cdktf/provider-azurerm";
 
 class ExampleStack extends TerraformStack {
@@ -22,8 +22,12 @@ class ExampleStack extends TerraformStack {
     const resourceGroupName = "rgl-cdktf-app-service-example";
 
     // NB the app service name is shared between all azure customers. it will
-    //    be used in the app service url, e.g., https://${appServiceName}.azurewebsites.net/.
-    const appServiceName = resourceGroupName;
+    //    be used in the app service url, e.g., https://${appName}.azurewebsites.net/.
+    const appName = resourceGroupName;
+
+    // see https://azure.microsoft.com/en-us/pricing/details/app-service/windows/
+    const servicePlanSkuName = "F1";
+    const isFreeOrSharedServicePlan = servicePlanSkuName == "F1" || servicePlanSkuName == "D1";
 
     new AzurermProvider(this, "azure", {
       features: {},
@@ -34,45 +38,45 @@ class ExampleStack extends TerraformStack {
       location: locationName,
     });
 
-    // see https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_plan
-    const appServicePlan = new AppServicePlan(this, "appServicePlan", {
+    // see https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan
+    const servicePlan = new ServicePlan(this, "servicePlan", {
       resourceGroupName: resourceGroup.name,
       location: resourceGroup.location,
       name: "Example",
-      kind: "Windows",
-      // see https://azure.microsoft.com/en-us/pricing/details/app-service/windows/
-      sku: {
-        size: "F1",
-        tier: "Free",
-      },
+      osType: "Windows",
+      skuName: servicePlanSkuName,
     });
 
-    // see https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service
-    const appService = new AppService(this, "appService", {
+    // see https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/azurerm_windows_web_app
+    const webApp = new WindowsWebApp(this, "webApp", {
       resourceGroupName: resourceGroup.name,
       location: resourceGroup.location,
-      name: appServiceName,
-      appServicePlanId: appServicePlan.id,
+      name: appName,
+      servicePlanId: servicePlan.id,
       clientAffinityEnabled: false,
       httpsOnly: true,
       siteConfig: {
-        use32BitWorkerProcess: true, // NB MUST be true for Free/Shared App Service Plans.
-        dotnetFrameworkVersion: "v6.0",
+        alwaysOn: !isFreeOrSharedServicePlan,
+        use32BitWorker: isFreeOrSharedServicePlan,
         http2Enabled: true,
         websocketsEnabled: true,
+        applicationStack: {
+          currentStack: "dotnet",
+          dotnetVersion: "v6.0",
+        },
       },
     });
 
     new TerraformOutput(this, "appResourceGroup", {
-      value: appService.resourceGroupName,
+      value: webApp.resourceGroupName,
     });
 
     new TerraformOutput(this, "appName", {
-      value: appService.name,
+      value: webApp.name,
     });
 
     new TerraformOutput(this, "appUrl", {
-      value: `https://${appService.name}.azurewebsites.net/`,
+      value: `https://${webApp.name}.azurewebsites.net/`,
     });
   }
 }
